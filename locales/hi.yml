@@ -1,0 +1,10 @@
+---
+    #Language
+    language_switch_success_pm: Your language preference has been updated to {}
+    language_not_supported: "{} is not supported yet!"
+    language_code_not_valid: That's not a valid lanuage code. Use an internationally accepted ISO code!
+    language_current_locale: "Current locale for this chat is: **{}**"
+    language_select_language: "**Select language** \n"
+    #Help
+    inline_help_text: "**Inline मार्गदर्शक**\nबस टाइप करो `@{} (command)` पाठ बॉक्स में, और प्रतिक्रिया की प्रतीक्षा करें.\n\n──「 **Get Note from Inline** 」──\n-> `note (*notetag)`\nऔर इनलाइन में नोटों की सूची की प्रतीक्षा करें, वर्तमान में केवल पाठ और बटन का समर्थन करते हैं.\n\n──「 **Stylish Generator Inline** 」──\n-> `stylish (your text)`\nएक पाठ को विभिन्न शैली में परिवर्तित करें, कहीं भी उपयोग किया जा सकता है!\n\n* = वैकल्पिक के रूप में इस्तेमाल किया जा सकता है"
+    start_message: "ही {},\nनाना आपकी सेवा में तैयार हैं!\n===================\n-> Python: `{}`\n-> Userbot: `{} (v{})`\n-> Assistant: `Running (v{})`\n-> Database: `{}`\n-> Group joined: `{}`\n===================\n`नीचे बॉट प्रेस बटन के बारे में अधिक जानकारी के लिए`"

@@ -1,7 +1,9 @@
 import asyncio
 import time
 from emoji import get_emoji_regexp
+import os
 
+from pyrogram.raw import functions
 from pyrogram import filters
 from pyrogram.types import ChatPermissions
 from pyrogram.errors import (
@@ -905,3 +907,21 @@ async def deleted_clean(client, message):
         if del_users > 0:
             del_stats = f"`Found` **{del_users}** `deleted accounts in this chat.`"
         await edrep(message, text=del_stats)
+
+
+@app.on_message(filters.user(AdminSettings) & filters.command("recents", Command))
+async def recent_actions(client, message):
+    full_log = await client.send(
+        functions.channels.GetAdminLog(
+            channel=await app.resolve_peer(chat),
+            q="",
+            max_id=0,
+            min_id=0,
+            limit=0,
+        )
+    )
+    with open(f"nana/downloads/recent_actions_{chat}.txt", "w", encoding="utf8") as log_file:
+        log_file.write(str(full_log))
+    await message.delete()
+    await client.send_document(message.chat.id, log_file)
+    os.remove(log_file)
