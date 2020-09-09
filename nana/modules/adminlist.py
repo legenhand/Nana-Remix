@@ -114,7 +114,7 @@ async def report_admin(client, message):
     teks += "".join(admin)
     if message.reply_to_message:
         await client.send_message(message.chat.id, teks, reply_to_message_id=message.reply_to_message.message_id,
-                                  parse_mode="html")
+            parse_mode="html")
     else:
         await client.send_message(message.chat.id, teks, parse_mode="html")
 

@@ -5,6 +5,11 @@
     language_code_not_valid: That's not a valid lanuage code. Use an internationally accepted ISO code!
     language_current_locale: "Current locale for this chat is: **{}**"
     language_select_language: "**Select language** \n"
-    #Help
+    #Assistant Help
     inline_help_text: "**Inline मार्गदर्शक**\nबस टाइप करो `@{} (command)` पाठ बॉक्स में, और प्रतिक्रिया की प्रतीक्षा करें.\n\n──「 **Get Note from Inline** 」──\n-> `note (*notetag)`\nऔर इनलाइन में नोटों की सूची की प्रतीक्षा करें, वर्तमान में केवल पाठ और बटन का समर्थन करते हैं.\n\n──「 **Stylish Generator Inline** 」──\n-> `stylish (your text)`\nएक पाठ को विभिन्न शैली में परिवर्तित करें, कहीं भी उपयोग किया जा सकता है!\n\n* = वैकल्पिक के रूप में इस्तेमाल किया जा सकता है"
     start_message: "ही {},\nनाना आपकी सेवा में तैयार हैं!\n===================\n-> Python: `{}`\n-> Userbot: `{} (v{})`\n-> Assistant: `Running (v{})`\n-> Database: `{}`\n-> Group joined: `{}`\n===================\n`नीचे बॉट प्रेस बटन के बारे में अधिक जानकारी के लिए`"
+    help_btn: "मदद"
+    help_str: "आप उस आदेश को कार्यान्वित करने के लिए अपने userbot पर {} का उपयोग कर सकते हैं।\nयहां आपके पास वर्तमान मॉड्यूल है\nमुख्य आदेश उपलब्ध हैं:\n - /start: अपने बॉट का दर्जा प्राप्त करें\n - /stats: अपने उपयोगकर्ता की स्थिति प्राप्त करें\n - /settings: सेटिंग्स अपने उपयोगकर्ता पट्टी\n - /getme: अपने उपयोगकर्ता नाम प्रोफ़ाइल जानकारी प्राप्त करें\n - /help: यह मेनू प्राप्त करें"
+    alive_str: "**[Nana-Remix](https://github.com/pokurt/Nana-Remix) पर चल रहा है {}:**\n - **बॉट**: `{} (v{})`\n - **Pyrogram**: `{}`\n - **अजगर**: `{}`\n - **डेटाबेस**: `{}`\n"
+    #Gdrive Assistant
+    gdrive_credential_err_heroku: "नमस्कार, यह देखें कि आप Google ड्राइव में लॉग इन नहीं हैं मदद मैं आपको लॉगिन करने में मदद कर सकता हूं।\nसबसे पहले, आपको अपने Google ड्राइव एपीआई को सक्रिय करने की आवश्यकता है\n1. [यहां जाएं]('https://developers.google.com/drive/api/v3/quickstart/pythart'),\nड्राइव API सक्षम करें पर क्लिक करें\n2. अपने Google खाते में लॉगिन करें (यदि आप पहले से लॉग इन हैं तो इसे छोड़ दें)\n3. लॉग इन करने के बाद, फिर से ड्राइव एपीआई सक्षम करें पर क्लिक करें,\nऔर डाउनलोड क्लाइंट कॉन्फ़िगरेशन  बटन पर क्लिक करें, इसे डाउनलोड करें।\n4. उस फ़ाइल को डाउनलोड करने के बाद, उस फ़ाइल को खोलें फिर उस सभी सामग्री को कॉपी करें dashboard.heroku.com पर जाएँ।\nअपने एप्लिकेशन चुनें और सेटिंग पर जाएं, कॉन्फ़िगर वैर पर जाएं फिर नाम के साथ कुंजी जोड़े gdrive_credentials अपने क्रेडेंशियल मान के साथ\nउसके बाद, आप टाइप /gdrive द्वारा अगले गाइड पर जा सकते हैं"

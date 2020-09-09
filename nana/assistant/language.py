@@ -6,14 +6,14 @@ import re
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from nana import setbot, AdminSettings
+from nana import setbot, AdminSettings, Owner
 
 
 @setbot.on_message(filters.user(AdminSettings) & filters.command(["setlang"]) & filters.private)
 async def locale(client, message):
     args = message.text.split(None, 1)
     if len(args) == 1:
-        text = tld(message.chat.id, "language_code_not_valid")
+        text = tld("language_code_not_valid")
         text += "\n**Currently available languages:**"
         for lang in LANGUAGES:
             locale = list_locales[lang]
@@ -28,10 +28,10 @@ async def locale(client, message):
 
     if locale in list_locales:
         if locale in LANGUAGES:
-            switch_to_locale(message.chat.id, locale)
-            await message.reply(tld(message.chat.id, 'language_switch_success_pm').format(list_locales[locale]))
+            switch_to_locale(Owner, locale)
+            await message.reply(tld('language_switch_success_pm').format(list_locales[locale]))
         else:
-            text = tld(message.chat.id, "language_not_supported").format(
+            text = tld("language_not_supported").format(
                 list_locales[locale])
             text += "\n**Currently available languages:**"
             for lang in LANGUAGES:
@@ -39,12 +39,10 @@ async def locale(client, message):
                 text += "\n**{}** - `{}`".format(locale, lang)
             await message.reply(text, parse_mode='markdown')
     else:
-        LANGUAGE = prev_locale(message.chat.id)
+        LANGUAGE = prev_locale(Owner)
         if LANGUAGE:
             locale = LANGUAGE.locale_name
             native_lang = list_locales[locale]
-            await message.reply(tld(
-                message.chat.id, "language_current_locale").format(native_lang),
-                               parse_mode='markdown')
+            await message.reply(tld("language_current_locale").format(native_lang),parse_mode='markdown')
         else:
-            await message.reply(tld(message.chat.id, "language_current_locale").format("English (US)"), parse_mode='markdown')
+            await message.reply(tld("language_current_locale").format("English (US)"), parse_mode='markdown')

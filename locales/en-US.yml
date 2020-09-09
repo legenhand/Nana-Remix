@@ -2,11 +2,13 @@
 language_switch_success_pm: Your language preference has been updated to {}
 language_not_supported: "{} is not supported yet!"
 language_code_not_valid: That's not a valid lanuage code. Use an internationally accepted ISO code!
-language_current_locale: "Current locale for this chat is: *{}*"
-language_select_language: "*Select language* \n"
-language_user_language: "User language: `{}`\n\nHelp us bring more languages to the bot by contributing to the project in [Crowdin](https://translate.harukaaya.me/HarukaAya)!"
-language_chat_language: "\nConnected chat language: `{}`"
-language_sel_user_lang: "*\n\nSelect a new user language:*"
-#Help
+language_current_locale: "Current locale for this chat is: **{}**"
+language_select_language: "**Select language** \n"
+#Assistant Help
 inline_help_text: "**Inline Guide**\nJust type `@{} (command)` in text box, and wait for response.\n\n──「 **Get Note from Inline** 」──\n-> `note (*notetag)`\nAnd wait for list of notes in inline, currently support Text and Button only.\n\n──「 **Stylish Generator Inline** 」──\n-> `stylish (your text)`\nConvert a text to various style, can be used anywhere!\n\n* = Can be used as optional"
 start_message: "Hi {},\nNana is Ready at your Service!\n===================\n-> Python: `{}`\n-> Userbot: `{} (v{})`\n-> Assistant: `Running (v{})`\n-> Database: `{}`\n-> Group joined: `{}`\n===================\n`For more about the bot press button down below`"
+help_btn: "Help"
+help_str: "You can use {} on your userbot to execute that commands.\nHere is current modules you have\nMain commands available:\n - /start: get your bot status\n - /stats: get your userbot status\n - /settings: settings your userbot\n - /getme: get your userbot profile info\n - /help: get this menu"
+alive_str: "**[Nana-Remix](https://github.com/pokurt/Nana-Remix) Running on {}:**\n - **Bot**: `{} (v{})`\n - **Pyrogram**: `{}`\n - **Python**: `{}`\n - **Database**: `{}`\n"
+#Gdrive Assistant
+gdrive_credential_err_heroku: "Hello, look like you're not logged in to google drive 🙂 I can help you to login.\nFirst of all, you need to activate your google drive API\n1. [Go here]('https://developers.google.com/drive/api/v3/quickstart/python'),\nclick Enable the drive API\n2. Login to your google account (skip this if you're already logged in)\n3. After logged in, click Enable the drive API again,\nand click Download Client Configuration button, download that.\n4. After downloaded that file, open that file then copy all of that content go to dashboard.heroku.com, \nselect your apps and go to settings, go to config vars then add key with name gdrive_credentials with value your credentials\nAfter that, you can go next guide by type /gdrive"

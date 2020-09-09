@@ -125,7 +125,7 @@ async def reboot_heroku(client, query):
 @setbot.on_callback_query(dynamic_data_filter("heroku_vars"))
 async def vars_heroku(_client, query):
     text = "**⚙️ Welcome to Heroku Vars Settings!**\n" \
-           "`Setting your heroku config vars here!`\n"
+        "`Setting your heroku config vars here!`\n"
     list_button = [[InlineKeyboardButton("⬅ back️", callback_data="back"),
                     InlineKeyboardButton("➕  add️", callback_data="add_vars")]]
     if HEROKU_API:

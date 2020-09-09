@@ -10,7 +10,9 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputText
 from pyrogram.errors import PeerIdInvalid
 from platform import python_version
 
+from .__main__ import dynamic_data_filter
 from nana import setbot, Owner, OwnerName, DB_AVAILABLE, app, USERBOT_VERSION, AdminSettings
+from nana.tr_engine.strings import tld
 from nana.helpers.msg_types import Types
 from nana.helpers.string import parse_button, build_keyboard
 from nana.modules.pm import welc_txt
@@ -271,19 +273,22 @@ async def inline_query_handler(client, query):
             me = await app.get_me()
         except ConnectionError:
             me = None
-        text = f"**[Nana-Remix](https://github.com/pokurt/Nana-Remix) Running on {commit_link}:**\n"
         if not me:
-            text += f" - **Bot**: `stopped (v{USERBOT_VERSION})`\n"
+            nana_stats = 'stopped'
         else:
-            text += f" - **Bot**: `alive (v{USERBOT_VERSION})`\n"
-        text += f" - **Pyrogram**: `{__version__}`\n"
-        text += f" - **Python**: `{python_version()}`\n"
-        text += f" - **Database**: `{DB_AVAILABLE}`\n"
+            nana_stats = 'alive'
         buttons = [[InlineKeyboardButton("stats", callback_data="alive_message")]]
         answers.append(InlineQueryResultArticle(
             title="Alive",
             description="Nana Userbot",
-            input_message_content=InputTextMessageContent(text, parse_mode="markdown", disable_web_page_preview=True),
+            input_message_content=InputTextMessageContent(tld("alive_str").format(
+                commit_link,
+                nana_stats,
+                USERBOT_VERSION,
+                __version__,
+                python_version(),
+                DB_AVAILABLE
+            ), parse_mode="markdown", disable_web_page_preview=True),
             reply_markup=InlineKeyboardMarkup(buttons)))
         await client.answer_inline_query(query.id,
                                          results=answers,
@@ -352,7 +357,7 @@ async def inline_query_handler(client, query):
 
     elif string.split()[0] == "cat":
         image = f"https://d2ph5fj80uercy.cloudfront.net/0{random.randint(1, 6)}/cat{random.randint(0,4999)}.jpg"
-        buttons = [[InlineKeyboardButton("Source", url="https://thiscatdoesnotexist.com/")]]
+        buttons = [[InlineKeyboardButton("Source", url="https://thiscatdoesnotexist.com/"), InlineKeyboardButton("Refresh", callback_data='cat_pic')]]
         answers.append(InlineQueryResultPhoto(
                 caption='Hi I like you too >~<',
                 photo_url=image,
@@ -372,6 +377,7 @@ async def inline_query_handler(client, query):
                                              switch_pm_text="Search in SpamProtection Database",
                                              switch_pm_parameter="help_inline"
                                              )
+            return
         get_user = string.split(None, 1)[1]
         try:
             user = await app.get_chat(get_user)

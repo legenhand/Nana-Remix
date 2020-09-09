@@ -55,7 +55,7 @@ async def start(_client, message):
         if len(message.text.split()) >= 2:
             helparg = message.text.split()[1]
             if helparg == "help_inline":
-                await message.reply(tld(message.chat.id, "inline_help_text").format(BotUsername))
+                await message.reply(tld("inline_help_text").format(BotUsername))
                 return
         try:
             me = await app.get_me()
@@ -70,18 +70,27 @@ async def start(_client, message):
         else:
             db_stat = 'None'
         buttons = InlineKeyboardMarkup(
-            [[InlineKeyboardButton(text="Help", callback_data="help_back")]])
-        await setbot.send_photo(message.chat.id,
-                                NANA_IMG,
-                                caption=tld(message.chat.id, "start_message").format(
-                                                                                OwnerName,
-                                                                                python_version(),
-                                                                                userbot_stat,
-                                                                                USERBOT_VERSION,
-                                                                                ASSISTANT_VERSION,
-                                                                                DB_AVAILABLE,
-                                                                                db_stat),
-            reply_markup=buttons)
+            [[InlineKeyboardButton(text=tld("help_btn"), callback_data="help_back")]])
+        if NANA_IMG:
+            await setbot.send_photo(message.chat.id,
+                                    NANA_IMG,
+                                    caption=tld("start_message").format(OwnerName,
+                                                                        python_version(),
+                                                                        userbot_stat,
+                                                                        USERBOT_VERSION,
+                                                                        ASSISTANT_VERSION,
+                                                                        DB_AVAILABLE,
+                                                                        db_stat),
+                                    reply_markup=buttons)
+        else:
+            await message.reply(tld("start_message").format(OwnerName,
+                                                            python_version(),
+                                                            userbot_stat,
+                                                            USERBOT_VERSION,
+                                                            ASSISTANT_VERSION,
+                                                            DB_AVAILABLE,
+                                                            db_stat),
+                                    reply_markup=buttons)
 
 
 @setbot.on_message(filters.user(AdminSettings) & filters.command(["getme"]))
