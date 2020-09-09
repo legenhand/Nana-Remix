@@ -37,14 +37,10 @@ async def get_text_settings():
 
 async def get_button_settings():
     me = await is_userbot_run()
-    if me:
-        toggle = "Stop Bot"
-    else:
-        toggle = "Start Bot"
+    toggle = "Stop Bot" if me else "Start Bot"
     list_button = [[InlineKeyboardButton(toggle, callback_data="toggle_startbot"),
                     InlineKeyboardButton("Restart Bot", callback_data="restart_bot")],
-                #    [InlineKeyboardButton("Set Sticker", callback_data="setsticker")]
-                   ]
+                    [InlineKeyboardButton("Set Sticker", callback_data="setsticker")]]
     if HEROKU_API:
         list_button.append([InlineKeyboardButton("Heroku Config Vars", callback_data="heroku_vars")])
         list_button.append([InlineKeyboardButton("Restart Heroku app", callback_data="restart_heroku")])
@@ -94,7 +90,10 @@ async def reboot_bot(client, query):
         await query.message.edit_text(text, reply_markup=button)
     except errors.exceptions.bad_request_400.MessageNotModified:
         pass
-    await client.answer_callback_query(query.id, "Please wait for bot restarting...")
+    try:
+        await client.answer_callback_query(query.id, "Please wait for bot restarting...")
+    except ConnectionError:
+        await client.answer_callback_query(query.id, "Userbot Already Stopped! Abort Restart")
 
 
 @setbot.on_callback_query(dynamic_data_filter("restart_heroku"))
