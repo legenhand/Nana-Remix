@@ -104,7 +104,7 @@ async def settings_sticker(client, message):
         for y in x:
             TEMP_KEYBOARD.append(y)
     await app.send_message("@Stickers", "/cancel")
-    await message.delete()
+    await message.message.delete()
     msg = await setbot.send_message(Owner, "Select your stickers for set as kang animation sticker",
                                     reply_markup=ReplyKeyboardMarkup(keyboard))
     USER_SET[message.from_user.id] = msg.message_id

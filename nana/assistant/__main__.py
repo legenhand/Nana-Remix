@@ -61,16 +61,10 @@ async def start(_client, message):
             me = await app.get_me()
         except ConnectionError:
             me = None
-        if not me:
-            userbot_stat = 'Stopped'
-        else:
-            userbot_stat = 'Running'
-        if DB_AVAILABLE:
-            db_stat = len(get_all_chats())
-        else:
-            db_stat = 'None'
+        userbot_stat = 'Stopped' if not me else 'Running'
+        db_stat = len(get_all_chats()) if DB_AVAILABLE else 'None'
         buttons = InlineKeyboardMarkup(
-            [[InlineKeyboardButton(text=tld("help_btn"), callback_data="help_back")]])
+            [[InlineKeyboardButton(text=tld("help_btn"), callback_data="help_back"), InlineKeyboardButton('Language', callback_data='set_lang_')]])
         if NANA_IMG:
             await setbot.send_photo(message.chat.id,
                                     NANA_IMG,
@@ -101,10 +95,7 @@ async def get_myself(client, message):
         await message.reply("Bot is currently turned off!")
         return
     getphoto = await client.get_profile_photos(me.id)
-    if len(getphoto) == 0:
-        getpp = None
-    else:
-        getpp = getphoto[0].file_id
+    getpp = None if len(getphoto) == 0 else getphoto[0].file_id
     text = "**ℹ️ Your profile:**\n"
     text += "First name: {}\n".format(me.first_name)
     if me.last_name:

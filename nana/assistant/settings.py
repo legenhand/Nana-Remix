@@ -82,7 +82,11 @@ async def start_stop_bot(client, query):
 
 @setbot.on_callback_query(dynamic_data_filter("restart_bot"))
 async def reboot_bot(client, query):
-    await restart_all()
+    try:
+        await restart_all()
+    except ConnectionError:
+        await client.answer_callback_query(query.id, "Userbot Already Stopped! Abort Restart")
+        return
     text = await get_text_settings()
     text += "\n✅ Bot was restarted!"
     button = await get_button_settings()
@@ -90,10 +94,7 @@ async def reboot_bot(client, query):
         await query.message.edit_text(text, reply_markup=button)
     except errors.exceptions.bad_request_400.MessageNotModified:
         pass
-    try:
-        await client.answer_callback_query(query.id, "Please wait for bot restarting...")
-    except ConnectionError:
-        await client.answer_callback_query(query.id, "Userbot Already Stopped! Abort Restart")
+    await client.answer_callback_query(query.id, "Please wait for bot restarting...")
 
 
 @setbot.on_callback_query(dynamic_data_filter("restart_heroku"))

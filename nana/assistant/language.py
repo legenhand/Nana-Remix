@@ -6,43 +6,37 @@ import re
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from nana import setbot, AdminSettings, Owner
+from nana import setbot, Owner
 
 
-@setbot.on_message(filters.user(AdminSettings) & filters.command(["setlang"]) & filters.private)
-async def locale(client, message):
-    args = message.text.split(None, 1)
-    if len(args) == 1:
-        text = tld("language_code_not_valid")
-        text += "\n**Currently available languages:**"
-        for lang in LANGUAGES:
-            locale = list_locales[lang]
-            text += "\n**{}** - `{}`".format(locale, lang)
-        await message.reply(text, parse_mode='markdown')
-        return
-    locale = args[1].lower()
-    if locale == 'en-us':
-        locale = 'en-US'
-    if locale in ['en-uk', 'en-gb']:
-        locale = 'en-GB'
+async def language_button_callback(_, __, query):
+    if re.match(r"set_lang_", query.data):
+        return True
 
-    if locale in list_locales:
-        if locale in LANGUAGES:
-            switch_to_locale(Owner, locale)
-            await message.reply(tld('language_switch_success_pm').format(list_locales[locale]))
+
+language_button_create = filters.create(language_button_callback)
+
+
+@setbot.on_callback_query(language_button_create)
+async def locale_button(client, query):
+    lang_match = re.findall(r"en-US|hi", query.data)
+    if lang_match:
+        if lang_match[0]:
+            switch_to_locale(Owner, lang_match[0])
+            await query.answer(text=tld('language_switch_success_pm').format(list_locales[lang_match[0]]))
         else:
-            text = tld("language_not_supported").format(
-                list_locales[locale])
-            text += "\n**Currently available languages:**"
-            for lang in LANGUAGES:
-                locale = list_locales[lang]
-                text += "\n**{}** - `{}`".format(locale, lang)
-            await message.reply(text, parse_mode='markdown')
-    else:
+            await query.answer(text="Error!", show_alert=True)
+    try:
         LANGUAGE = prev_locale(Owner)
-        if LANGUAGE:
-            locale = LANGUAGE.locale_name
-            native_lang = list_locales[locale]
-            await message.reply(tld("language_current_locale").format(native_lang),parse_mode='markdown')
-        else:
-            await message.reply(tld("language_current_locale").format("English (US)"), parse_mode='markdown')
+        locale = LANGUAGE.locale_name
+        curr_lang = list_locales[locale]
+    except Exception:
+        curr_lang = "English (US)"
+
+    text = tld("language_select_language")
+    text += tld("language_current_locale").format(curr_lang)
+    buttons = [[InlineKeyboardButton("English (US) 🇺🇸", callback_data="set_lang_en-US"), InlineKeyboardButton("Hindi 🇮🇳", callback_data="set_lang_hi")]]
+    await client.edit_message_text(chat_id=Owner, message_id=query.message.message_id, text=text, parse_mode='markdown',
+        reply_markup=InlineKeyboardMarkup(buttons))
+    await client.answer_callback_query(query.id)
+
