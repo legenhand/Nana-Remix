@@ -1,11 +1,14 @@
 import math
 import requests
 import asyncio
+import re
 
 from pyrogram import filters
 
-from nana import app, Command, AdminSettings, BotUsername, edrep
+from nana import app, Command, AdminSettings, BotUsername, edrep, Owner, setbot
 from nana.helpers.PyroHelpers import ReplyCheck
+from nana.modules.database import anime_db as sql
+from nana.assistant.__main__ import dynamic_data_filter
 
 
 __MODULE__ = "Anilist"
@@ -284,3 +287,35 @@ async def manga_search(client, message):
                 await edrep(message, text=ms_g)
         else:
             await edrep(message, text=ms_g)
+
+
+async def addfav_callback(_, __, query):
+    if re.match(r"addfav_", query.data):
+        return True
+
+
+async def remfav_callback(_, __, query):
+    if re.match(r"remfav_", query.data):
+        return True
+
+
+@setbot.on_callback_query(filters.create(addfav_callback))
+async def add_favorite(client, query):
+    if query.from_user.id in AdminSettings:
+        match = query.data.split("_")[1]
+        add = sql.add_fav(Owner, match)
+        if add:
+            await query.answer('Added to Favourites', show_alert=True)
+        else:
+            await query.answer('Anime already Exists in Favourites', show_alert=True)
+    else:
+        await query.answer('You are not Allowed to Press this', show_alert=True)
+
+
+@setbot.on_callback_query(filters.create(remfav_callback))
+async def rem_favorite(client, query):
+    if query.from_user.id in AdminSettings:
+        sql.remove_fav(Owner)
+        await setbot.edit_inline_text(query.inline_message_id,'Removed from Favourites')
+    else:
+        await query.answer('You are not Allowed to Press this', show_alert=True)
