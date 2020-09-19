@@ -18,6 +18,7 @@ from nana.helpers.string import parse_button, build_keyboard
 from nana.modules.pm import welc_txt
 from nana.helpers.aiohttp_helper import AioHttp
 from nana.modules.animelist import url, anime_query, shorten
+from nana.modules.database import anime_db as sql
 from nana.modules.stylish import text_style_generator, formatting_text_inline, CHAR_OVER, \
     CHAR_UNDER, CHAR_STRIKE, graffiti, graffitib, CHAR_POINTS, upsidedown_text_inline, smallcaps, superscript, \
     subscript, wide, bubbles, bubblesblack, smothtext, handwriting, handwritingb

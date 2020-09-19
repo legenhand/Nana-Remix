@@ -289,6 +289,17 @@ async def manga_search(client, message):
             await edrep(message, text=ms_g)
 
 
+@app.on_message(filters.user(AdminSettings) & filters.command("favourite", Command))
+async def favourite_animelist(client, message):
+    x = await client.get_inline_bot_results(f"{BotUsername}", f"favourite")
+    await message.delete()
+    await client.send_inline_bot_result(chat_id=message.chat.id,
+                                        query_id=x.query_id,
+                                        result_id=x.results[0].id,
+                                        reply_to_message_id=ReplyCheck(message),
+                                        hide_via=True)
+
+
 async def addfav_callback(_, __, query):
     if re.match(r"addfav_", query.data):
         return True
