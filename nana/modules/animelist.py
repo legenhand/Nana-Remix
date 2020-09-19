@@ -34,6 +34,10 @@ returns information about the manga.
 -> `airing <anime>`
 To get airing time of the anime.
 
+──「 **Favourite List** 」──
+-> `favourite`
+Get your favourite Anime list.
+
 """
 
 
