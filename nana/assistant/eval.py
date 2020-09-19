@@ -112,7 +112,7 @@ async def terminal(client, message):
             file.write(output)
             file.close()
             await client.send_document(message.chat.id, "nana/cache/output.txt", reply_to_message_id=message.message_id,
-                                       caption="`Output file`")
+                caption="`Output file`")
             os.remove("nana/cache/output.txt")
             return
         await message.reply(f"**Output:**\n```{output}```", parse_mode='markdown')

@@ -6,25 +6,14 @@ from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.raw import functions
 
-from nana import setbot, AdminSettings, Command, DB_AVAILABLE, StartTime, NANA_IMG, BotUsername, app
+from nana import setbot, AdminSettings, Command, DB_AVAILABLE, StartTime, NANA_IMG, BotUsername, app, Owner
 from nana.helpers.misc import paginate_modules
 from nana.modules.chats import get_msgc
+from nana.tr_engine.strings import tld
 
 if DB_AVAILABLE:
     from nana.modules.database.chats_db import get_all_chats
     from nana.modules.database.notes_db import get_all_selfnotes
-
-HELP_STRINGS = f"""
-You can use {", ".join(Command)} on your userbot to execute that commands.
-Here is current modules you have
-
-**Main** commands available:
- - /start: get your bot status
- - /stats: get your userbot status
- - /settings: settings your userbot
- - /getme: get your userbot profile info
- - /help: get this menu
-"""
 
 
 def get_readable_time(seconds: int) -> str:
@@ -61,11 +50,11 @@ async def help_command(client, message):
     if message.chat.type != "private":
         buttons = InlineKeyboardMarkup(
             [[InlineKeyboardButton(text="Help",
-                                   url=f"t.me/{BotUsername}?start=help")]])
+                url=f"t.me/{BotUsername}?start=help")]])
         await message.reply("**OWNER ONLY**\nContact me in PM to get the list of possible commands.",
                             reply_markup=buttons)
         return
-    await help_parser(client, message.chat.id, HELP_STRINGS)
+    await help_parser(client, message.chat.id, tld("help_str").format(", ".join(Command)))
 
 
 async def help_button_callback(_, __, query):
@@ -90,7 +79,7 @@ async def help_button(_client, query):
                                      [[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
 
     elif back_match:
-        await query.message.edit(text=HELP_STRINGS,
+        await query.message.edit(text=tld("help_str").format(", ".join(Command)),
                                  reply_markup=InlineKeyboardMarkup(paginate_modules(0, HELP_COMMANDS, "help")))
 
 
@@ -102,7 +91,7 @@ async def stats(_client, message):
         text += "<b>Group joined:</b> `{} groups`\n".format(len(get_all_chats()))
     stk = await app.send(functions.messages.GetAllStickers(hash=0))
     all_sets = stk.sets
-    count = sum([x.count for x in all_sets])
+    count = sum(x.count for x in all_sets)
     text += f"<b>Stickers Count:</b> <code>{count} across {len(all_sets)} sets</code>\n"
     text += "<b>Message received:</b> `{} messages`\n".format(get_msgc())
     uptime = get_readable_time((time.time() - StartTime))

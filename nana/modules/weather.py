@@ -13,13 +13,13 @@ __HELP__ = """
 Get current weather in your location
 
 ──「 **Weather** 」──
--> `wttr (location)`
+-> `wtr (location)`
 Get current weather in your location.
 Powered by `wttr.in`
 """
 
 
-@app.on_message(filters.user(AdminSettings) & filters.command("wttr", Command))
+@app.on_message(filters.user(AdminSettings) & filters.command('wttr', Command))
 async def weather(_client, message):
     if len(message.command) == 1:
         await edrep(message, text="Usage: `wttr Maldives`")
