@@ -74,20 +74,20 @@ def t(milliseconds: int) -> str:
 
 airing_query = '''
     query ($id: Int,$search: String) { 
-      Media (id: $id, type: ANIME,search: $search) { 
-        id
-        episodes
-        title {
-          romaji
-          english
-          native
+        Media (id: $id, type: ANIME,search: $search) { 
+            id
+            episodes
+            title {
+                romaji
+                english
+                native
+            }
+            nextAiringEpisode {
+                airingAt
+                timeUntilAiring
+                episode
+            } 
         }
-        nextAiringEpisode {
-           airingAt
-           timeUntilAiring
-           episode
-        } 
-      }
     }
     '''
 
@@ -233,8 +233,7 @@ async def character_search(client, message):
         return
     search = search[1]
     variables = {'query': search}
-    json = requests.post(url, json={'query': character_query, 'variables': variables}).json()[
-        'data'].get('Character', None)
+    json = requests.post(url, json={'query': character_query, 'variables': variables}).json()['data'].get('Character', None)
     if json:
         ms_g = f"**{json.get('name').get('full')}**(`{json.get('name').get('native')}`)\n"
         description = f"{json['description']}"
