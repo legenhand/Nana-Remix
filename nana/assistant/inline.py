@@ -50,37 +50,37 @@ async def inline_query_handler(client, query):
 
     if query.from_user.id not in AdminSettings:
         await client.answer_inline_query(query.id,
-                                         results=answers,
-                                         switch_pm_text="Sorry, this bot only for {}".format(OwnerName),
-                                         switch_pm_parameter="createown"
-                                         )
+                                        results=answers,
+                                        switch_pm_text="Sorry, this bot only for {}".format(OwnerName),
+                                        switch_pm_parameter="createown"
+                                        )
         return
 
     if string == "":
         await client.answer_inline_query(query.id,
-                                         results=answers,
-                                         switch_pm_text="Need help? Click here",
-                                         switch_pm_parameter="help_inline"
-                                         )
+                                        results=answers,
+                                        switch_pm_text="Need help? Click here",
+                                        switch_pm_parameter="help_inline"
+                                        )
         return
 
     # Notes
     if string.split()[0] == "note":
         if not DB_AVAILABLE:
             await client.answer_inline_query(query.id,
-                                             results=answers,
-                                             switch_pm_text="Your database isn't avaiable!",
-                                             switch_pm_parameter="help_inline"
-                                             )
+                                            results=answers,
+                                            switch_pm_text="Your database isn't avaiable!",
+                                            switch_pm_parameter="help_inline"
+                                            )
             return
         if len(string.split()) == 1:
             allnotes = notes_db.get_all_selfnotes_inline(query.from_user.id)
             if not allnotes:
                 await client.answer_inline_query(query.id,
-                                                 results=answers,
-                                                 switch_pm_text="You dont have any notes!",
-                                                 switch_pm_parameter="help_inline"
-                                                 )
+                                                results=answers,
+                                                switch_pm_text="You dont have any notes!",
+                                                switch_pm_parameter="help_inline"
+                                                )
                 return
             if len(list(allnotes)) >= 30:
                 rng = 30
@@ -101,20 +101,20 @@ async def inline_query_handler(client, query):
                     input_message_content=InputTextMessageContent(note),
                     reply_markup=InlineKeyboardMarkup(button)))
             await client.answer_inline_query(query.id,
-                                             results=answers,
-                                             switch_pm_text="Yourself notes",
-                                             switch_pm_parameter="help_inline"
-                                             )
+                                            results=answers,
+                                            switch_pm_text="Yourself notes",
+                                            switch_pm_parameter="help_inline"
+                                            )
             return
         q = string.split(None, 1)
         notetag = q[1]
         noteval = notes_db.get_selfnote(query.from_user.id, notetag)
         if not noteval:
             await client.answer_inline_query(query.id,
-                                             results=answers,
-                                             switch_pm_text="Note not found!",
-                                             switch_pm_parameter="help_inline"
-                                             )
+                                            results=answers,
+                                            switch_pm_text="Note not found!",
+                                            switch_pm_parameter="help_inline"
+                                            )
             return
         note, button = parse_button(noteval.get('value'))
         button = build_keyboard(button)
@@ -125,9 +125,9 @@ async def inline_query_handler(client, query):
             reply_markup=InlineKeyboardMarkup(button)))
         try:
             await client.answer_inline_query(query.id,
-                                             results=answers,
-                                             cache_time=5
-                                             )
+                                            results=answers,
+                                            cache_time=5
+                                            )
         except errors.exceptions.bad_request_400.MessageEmpty:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             log_errors = traceback.format_exception(etype=exc_type, value=exc_obj, tb=exc_tb)
@@ -141,10 +141,10 @@ async def inline_query_handler(client, query):
     elif string.split()[0] == "stylish":
         if len(string.split()) == 1:
             await client.answer_inline_query(query.id,
-                                             results=answers,
-                                             switch_pm_text="Insert any text to convert it!",
-                                             switch_pm_parameter="help_inline"
-                                             )
+                                            results=answers,
+                                            switch_pm_text="Insert any text to convert it!",
+                                            switch_pm_parameter="help_inline"
+                                            )
             return
         text = string.split(None, 1)[1]
         upside = upsidedown_text_inline(text)
@@ -229,17 +229,19 @@ async def inline_query_handler(client, query):
             description="Handwriting Bold Text",
             input_message_content=InputTextMessageContent(handwritingb_text)))
         await client.answer_inline_query(query.id,
-                                         results=answers,
-                                         switch_pm_text="Converted to stylish text",
-                                         switch_pm_parameter="help_inline"
-                                         )
+                                        results=answers,
+                                        switch_pm_text="Converted to stylish text",
+                                        switch_pm_parameter="help_inline"
+                                        )
 
     # PM_PERMIT
     elif string.split()[0] == "engine_pm":
-        button = [[InlineKeyboardButton("Ask for Money", callback_data="engine_pm_block"),
-                   InlineKeyboardButton("Contact me", callback_data="engine_pm_nope")],
-                  [InlineKeyboardButton("Report", callback_data="engine_pm_report"),
-                   InlineKeyboardButton("Passing by", callback_data="engine_pm_none")]]
+        button = [
+            [InlineKeyboardButton("Ask for Money", callback_data="engine_pm_block"),
+            InlineKeyboardButton("Contact me", callback_data="engine_pm_nope")],
+            [InlineKeyboardButton("Report", callback_data="engine_pm_report"),
+            InlineKeyboardButton("Passing by", callback_data="engine_pm_none")]
+            ]
         random.shuffle(button)
         answers.append(InlineQueryResultArticle(
             title="Engine pm",
@@ -247,9 +249,9 @@ async def inline_query_handler(client, query):
             input_message_content=InputTextMessageContent(welc_txt, parse_mode="markdown"),
             reply_markup=InlineKeyboardMarkup(button)))
         await client.answer_inline_query(query.id,
-                                         results=answers,
-                                         cache_time=0
-                                         )
+                                        results=answers,
+                                        cache_time=0
+                                        )
 
     elif string.split()[0] == "speedtest":
         buttons = [[InlineKeyboardButton("Image",
@@ -262,9 +264,9 @@ async def inline_query_handler(client, query):
             input_message_content=InputTextMessageContent("Select SpeedTest Mode", parse_mode="markdown"),
             reply_markup=InlineKeyboardMarkup(buttons)))
         await client.answer_inline_query(query.id,
-                                         results=answers,
-                                         cache_time=0
-                                         )
+                                        results=answers,
+                                        cache_time=0
+                                        )
     elif string.split()[0] == "alive":
         repo = git.Repo(os.getcwd())
         master = repo.head.reference
@@ -292,16 +294,16 @@ async def inline_query_handler(client, query):
             ), parse_mode="markdown", disable_web_page_preview=True),
             reply_markup=InlineKeyboardMarkup(buttons)))
         await client.answer_inline_query(query.id,
-                                         results=answers,
-                                         cache_time=0
-                                         )
+                                        results=answers,
+                                        cache_time=0
+                                        )
     elif string.split()[0] == "anime":
         if len(string.split()) == 1:
             await client.answer_inline_query(query.id,
-                                             results=answers,
-                                             switch_pm_text="Search an Anime",
-                                             switch_pm_parameter="help_inline"
-                                             )
+                                            results=answers,
+                                            switch_pm_text="Search an Anime",
+                                            switch_pm_parameter="help_inline"
+                                            )
             return
         search = string.split(None, 1)[1]
         variables = {'search' : search}
@@ -326,7 +328,7 @@ async def inline_query_handler(client, query):
                         if site == "youtube": trailer = 'https://youtu.be/' + trailer_id
                     description = json.get('description', 'N/A').replace('<i>', '').replace('</i>', '').replace('<br>', '')
                     msg += shorten(description, info) 
-                    image = json.get('bannerImage', None)
+                    image = f'https://img.anili.st/media/{json["id"]}'
                     if trailer:
                         buttons = [[InlineKeyboardButton("More Info", url=info), InlineKeyboardButton("Trailer 🎬", url=trailer)],
                                     [InlineKeyboardButton('Add to Watchlist', callback_data=f'addfav_{json["title"]["romaji"]}')]]
@@ -376,30 +378,6 @@ async def inline_query_handler(client, query):
                                         cache_time=0
                                         )
 
-    elif string.split()[0] == "favourite":
-        fav = sql.get_fav(Owner)
-        if fav:
-            text = "**My watchlist:**\n"
-            for title in fav:
-                text += f" - {title.data}\n"
-            keyb = [
-                [InlineKeyboardButton(text="Watched ✅", callback_data=f"remfav_{Owner}")]
-            ]
-            answers.append(InlineQueryResultArticle(
-                title="Favourites",
-                description="Anime",
-                input_message_content=InputTextMessageContent(text, parse_mode="markdown"),
-                reply_markup=InlineKeyboardMarkup(keyb)))
-        else:
-            answers.append(InlineQueryResultArticle(
-                title="Fabourites",
-                description="Anime",
-                input_message_content=InputTextMessageContent("**No favourites yet!**", parse_mode="markdown")))
-        await client.answer_inline_query(query.id,
-                                        results=answers,
-                                        cache_time=0
-                                        )
-
     elif string.split()[0] == "cat":
         image = f"https://d2ph5fj80uercy.cloudfront.net/0{random.randint(1, 6)}/cat{random.randint(0,4999)}.jpg"
         buttons = [[InlineKeyboardButton("Source", url="https://thiscatdoesnotexist.com/"), InlineKeyboardButton("Refresh", callback_data='cat_pic')]]
@@ -410,63 +388,6 @@ async def inline_query_handler(client, query):
                 title="Cursed Cat",
                 description="Cursed Cat",
                 reply_markup=InlineKeyboardMarkup(buttons)))
-        await client.answer_inline_query(query.id,
-                                        results=answers,
-                                        cache_time=0
-                                        )
-
-    if string.split()[0] == "lookup":
-        if len(string.split()) == 1:
-            await client.answer_inline_query(query.id,
-                                             results=answers,
-                                             switch_pm_text="Search in SpamProtection Database",
-                                             switch_pm_parameter="help_inline"
-                                             )
-            return
-        get_user = string.split(None, 1)[1]
-        try:
-            user = await app.get_chat(get_user)
-        except PeerIdInvalid:
-            await client.answer_inline_query(query.id,
-                                             results=answers,
-                                             switch_pm_text="Can't Find the Chat in Database",
-                                             switch_pm_parameter="help_inline"
-                                             )
-            return
-        api_url = f'https://api.intellivoid.net/spamprotection/v1/lookup?query={user.id}'
-        a = await AioHttp().get_json(api_url)
-        response = a['success']
-        if response == True:
-            date = a["results"]["last_updated"]
-            stats = f'**◢ Intellivoid• SpamProtection Info**:\n'
-            stats += f' - **Updated on**: `{datetime.fromtimestamp(date).strftime("%Y-%m-%d %I:%M:%S %p")}`\n'
-            if a["results"]["attributes"]["is_potential_spammer"] == True:
-                stats += f' - **User**: `USERxSPAM`\n'
-            elif a["results"]["attributes"]["is_operator"] == True:
-                stats += f' - **User**: `USERxOPERATOR`\n'
-            elif a["results"]["attributes"]["is_agent"] == True:
-                stats += f' - **User**: `USERxAGENT`\n'
-            elif a["results"]["attributes"]["is_whitelisted"] == True:
-                stats += f' - **User**: `USERxWHITELISTED`\n'
-        
-            stats += f' - **Type**: `{a["results"]["entity_type"]}`\n'
-            stats += f' - **Language**: `{a["results"]["language_prediction"]["language"]}`\n'
-            stats += f' - **Language Probability**: `{a["results"]["language_prediction"]["probability"]}`\n'
-            stats += f'**Spam Prediction**:\n'
-            stats += f' - **Ham Prediction**: `{a["results"]["spam_prediction"]["ham_prediction"]}`\n'
-            stats += f' - **Spam Prediction**: `{a["results"]["spam_prediction"]["spam_prediction"]}`\n'
-            stats += f'**Blacklisted**: `{a["results"]["attributes"]["is_blacklisted"]}`\n'
-            if a["results"]["attributes"]["is_blacklisted"] == True:
-                stats += f' - **Reason**: `{a["results"]["attributes"]["blacklist_reason"]}`\n'
-                stats += f' - **Flag**: `{a["results"]["attributes"]["blacklist_flag"]}`\n'
-            stats += f'**TELEGRAM HASH**:\n`{a["results"]["private_telegram_id"]}`\n'
-        buttons = [[InlineKeyboardButton("Logs", url="https://t.me/SpamProtectionLogs"),
-                    InlineKeyboardButton('Info', url=f't.me/SpamProtectionBot/?start=00_{user.id}')]]
-        answers.append(InlineQueryResultArticle(
-            title=f'{a["results"]["entity_type"]}',
-            description=f'{a["results"]["private_telegram_id"]}',
-            input_message_content=InputTextMessageContent(stats, parse_mode="markdown", disable_web_page_preview=True),
-            reply_markup=InlineKeyboardMarkup(buttons)))
         await client.answer_inline_query(query.id,
                                         results=answers,
                                         cache_time=0
