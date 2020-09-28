@@ -140,8 +140,10 @@ async def update_button(client, query):
             os.system('git pull')
             os.system('pip install -U -r requirements.txt')
             await client.send_message(Owner, "Built Successfully, Please Restart Manually in /settings")
+            return
         except Exception as e:
             await client.send_message(Owner, f"Build Unsuccess,\nLog:{e}")
+            return
     try:
         upstream.pull(brname)
         await client.send_message(Owner, "Successfully Updated!\nBot is restarting...")
