@@ -376,6 +376,30 @@ async def inline_query_handler(client, query):
                                         cache_time=0
                                         )
 
+    elif string.split()[0] == "favourite":
+        fav = sql.get_fav(Owner)
+        if fav:
+            text = "**My watchlist:**\n"
+            for title in fav:
+                text += f" - {title.data}\n"
+            keyb = [
+                [InlineKeyboardButton(text="Watched ✅", callback_data=f"remfav_{Owner}")]
+            ]
+            answers.append(InlineQueryResultArticle(
+                title="Favourites",
+                description="Anime",
+                input_message_content=InputTextMessageContent(text, parse_mode="markdown"),
+                reply_markup=InlineKeyboardMarkup(keyb)))
+        else:
+            answers.append(InlineQueryResultArticle(
+                title="Fabourites",
+                description="Anime",
+                input_message_content=InputTextMessageContent("**No favourites yet!**", parse_mode="markdown")))
+        await client.answer_inline_query(query.id,
+                                        results=answers,
+                                        cache_time=0
+                                        )
+
     elif string.split()[0] == "cat":
         image = f"https://d2ph5fj80uercy.cloudfront.net/0{random.randint(1, 6)}/cat{random.randint(0,4999)}.jpg"
         buttons = [[InlineKeyboardButton("Source", url="https://thiscatdoesnotexist.com/"), InlineKeyboardButton("Refresh", callback_data='cat_pic')]]
