@@ -64,11 +64,11 @@ async def ocr(client, message):
     try:
         ParsedText = test_file["ParsedResults"][0]["ParsedText"]
     except BaseException as e:
-        await message.reply(e)
+        await edrep(message, text=e)
     else:
         if ParsedText == 'ParsedResults':
             await message.delete()
             return
         else:
-            await message.reply(f"`{ParsedText}`")
+            await edrep(message, text=f"`{ParsedText}`")
     os.remove(downloaded_file_name)

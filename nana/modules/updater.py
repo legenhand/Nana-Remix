@@ -131,7 +131,7 @@ async def updater(client, message):
             file.write(changelog_str)
             file.close()
             await client.send_document(message.chat.id, "nana/cache/output.txt", reply_to_message_id=message.message_id,
-                                       caption="`Changelog file`")
+                                    caption="`Changelog file`")
             os.remove("nana/cache/output.txt")
         else:
             await edrep(message, text=changelog_str)
