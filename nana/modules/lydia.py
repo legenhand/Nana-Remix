@@ -97,7 +97,4 @@ async def check_message(_client, message):
         if message.text.lower() == f"@{OwnerUsername}":
             return True
         if message.reply_to_message:
-            if message.reply_to_message.from_user.id == Owner:
-                return True
-            else:
-                return False
+            return message.reply_to_message.from_user.id == Owner
