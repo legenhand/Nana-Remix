@@ -1,5 +1,5 @@
 import random
-
+import os
 from git import Repo
 from git.exc import GitCommandError, NoSuchPathError, InvalidGitRepositoryError
 from pyrogram import filters
@@ -134,6 +134,14 @@ async def update_button(client, query):
             await client.send_message(Owner, "no heroku application found, but a key given? 😕 ")
         await client.send_message(Owner, "Build Unsuccess, Check heroku build log for more detail")
         return
+    else:
+        try:
+            os.system('git reset --hard')
+            os.system('git pull')
+            os.system('pip install -U -r requirements.txt')
+            await client.send_message(Owner, "Built Successfully, Please Restart Manually in /settings")
+        except Exception as e:
+            await client.send_message(Owner, f"Build Unsuccess,\nLog:{e}")
     try:
         upstream.pull(brname)
         await client.send_message(Owner, "Successfully Updated!\nBot is restarting...")
