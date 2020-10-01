@@ -5,6 +5,7 @@ import logging
 import os
 import sys
 import time
+import platform
 from inspect import getfullargspec
 
 from pydrive.auth import GoogleAuth
@@ -56,8 +57,8 @@ if ENV:
     logger = os.environ.get('LOGGER', True)
     # Version
     lang_code = os.environ.get('lang_code', "en")
-    device_model = os.environ.get('device_model', "PC")
-    system_version = os.environ.get('system_version', "Linux")
+    device_model = os.environ.get('device_model', platform.machine())
+    system_version = os.environ.get('system_version', platform.platform())
     time_country = os.environ.get("time_country", None)
 
     # Must be filled
@@ -112,8 +113,8 @@ else:
     logger = Config.LOGGER
     # Version
     lang_code = Config.lang_code
-    device_model = Config.device_model
-    system_version = Config.system_version
+    device_model = platform.machine()
+    system_version = platform.platform()
 
     # Must be filled
     api_id = Config.api_id
