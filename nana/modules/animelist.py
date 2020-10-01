@@ -1,15 +1,13 @@
-import math
 import requests
 import asyncio
 import re
 
+import requests
 from pyrogram import filters
 
 from nana import app, Command, AdminSettings, BotUsername, edrep, Owner, setbot
 from nana.helpers.PyroHelpers import ReplyCheck
 from nana.modules.database import anime_db as sql
-from nana.assistant.__main__ import dynamic_data_filter
-
 
 __MODULE__ = "Anilist"
 

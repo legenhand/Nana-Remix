@@ -1,8 +1,9 @@
 import os
+
 import requests
 from pyrogram import filters
-from nana import app, Command, AdminSettings, edrep
 
+from nana import app, Command, AdminSettings, edrep
 
 __MODULE__ = "OCR"
 __HELP__ = """

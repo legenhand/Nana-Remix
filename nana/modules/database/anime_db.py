@@ -1,6 +1,8 @@
 import threading
-from nana import SESSION, BASE
+
 from sqlalchemy import Column, UnicodeText, Numeric
+
+from nana import SESSION, BASE
 
 
 class Favourites(BASE):

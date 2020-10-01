@@ -1,8 +1,8 @@
 # Thanks to @Athfan for a Base Plugin.
 # Go and Do a star on his repo: https://github.com/athphane/userbot
 import time
-import timeago
 
+import timeago
 from pyrogram import filters
 from pyrogram.utils import get_channel_id
 

@@ -2,12 +2,12 @@ import asyncio
 from time import time
 
 from coffeehouse.api import API
-from coffeehouse.lydia import LydiaAI
 from coffeehouse.exception import CoffeeHouseError as CFError
+from coffeehouse.lydia import LydiaAI
 from pyrogram import filters
 
-from nana import lydia_api, app, Command, setbot, Owner, OwnerUsername, AdminSettings, edrep
 import nana.modules.database.lydia_db as sql
+from nana import lydia_api, app, Command, setbot, Owner, OwnerUsername, AdminSettings, edrep
 
 __MODULE__ = "Chatbot"
 __HELP__ = """

@@ -1,12 +1,12 @@
-from nana.helpers.aiohttp_helper import AioHttp
-from datetime import datetime
 from asyncio import sleep
+from datetime import datetime
 
 from pyrogram import filters
-from pyrogram.types import InlineKeyboardButton, InlineQueryResultArticle, InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardMarkup
 from pyrogram.errors import PeerIdInvalid
 
-from nana import app, Command, AdminSettings, setbot, edrep
+from nana import app, Command, AdminSettings, edrep
+from nana.helpers.aiohttp_helper import AioHttp
+
 
 @app.on_message(filters.user(AdminSettings) & filters.command("lookup", Command))
 async def lookup(client, message):

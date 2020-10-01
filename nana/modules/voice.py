@@ -1,9 +1,9 @@
+import asyncio
 import os
 from datetime import datetime
+
 import requests
 from gtts import gTTS
-import asyncio
-
 from pyrogram import filters
 
 from nana import app, Command, IBM_WATSON_CRED_URL, IBM_WATSON_CRED_PASSWORD, AdminSettings, edrep

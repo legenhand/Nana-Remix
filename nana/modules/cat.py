@@ -1,10 +1,11 @@
+import random
+import re
+
 from pyrogram import filters
 from pyrogram.types import InputMediaPhoto, InlineKeyboardMarkup, InlineKeyboardButton
-from nana import setbot, AdminSettings, BotUsername, app, Command
-from nana.helpers.PyroHelpers import ReplyCheck
-import speedtest
-import re
-import random
+
+from nana import setbot, AdminSettings
+
 
 def cat_callback(_, __, query):
     if re.match("cat_pic", query.data):

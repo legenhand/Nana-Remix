@@ -1,5 +1,7 @@
-from sqlalchemy import Column, String, UnicodeText
 import threading
+
+from sqlalchemy import Column, String, UnicodeText
+
 from nana import BASE, SESSION
 
 

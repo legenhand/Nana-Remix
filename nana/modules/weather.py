@@ -1,12 +1,11 @@
 
 import asyncio
-import aiohttp
 from html import escape
 
+import aiohttp
 from pyrogram import filters
 
 from nana import app, Command, AdminSettings, edrep
-
 
 __MODULE__ = "Weather"
 __HELP__ = """

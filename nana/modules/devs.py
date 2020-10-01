@@ -5,16 +5,14 @@ import subprocess
 import sys
 import traceback
 from io import StringIO
-from platform import python_version
 
 import requests
 from pyrogram import filters
-import pyrogram as p
 
-from nana import Command, logging, app, edrep, AdminSettings
+from nana import Command, app, edrep, AdminSettings
+from nana.helpers.aiohttp_helper import AioHttp
 from nana.helpers.deldog import deldog
 from nana.helpers.parser import mention_markdown
-from nana.helpers.aiohttp_helper import AioHttp
 
 __MODULE__ = "Devs"
 __HELP__ = """

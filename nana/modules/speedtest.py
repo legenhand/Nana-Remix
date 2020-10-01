@@ -1,8 +1,11 @@
+import re
+
+import speedtest
 from pyrogram import filters
+
 from nana import setbot, AdminSettings, BotUsername, app, Command
 from nana.helpers.PyroHelpers import ReplyCheck
-import speedtest
-import re
+
 
 def speedtest_callback(_, __, query):
     if re.match("speedtest", query.data):
